@@ -12,3 +12,11 @@ extension Request.Services {
         request.application.services.awsClient.service
     }
 }
+
+struct AWSLifecycleHandler: LifecycleHandler {
+    func shutdownAsync(_ application: Application) async {
+        do {
+            try await application.services.awsClient.service.shutdown()
+        } catch {}
+    }
+}
